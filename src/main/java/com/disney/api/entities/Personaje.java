@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -26,7 +24,7 @@ import lombok.Setter;
 public class Personaje implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name= "personaje_id", unique = true, nullable = false)
 	private Long personajeId;
 	
@@ -41,19 +39,9 @@ public class Personaje implements Serializable {
 	private Double peso;
 	
 	@NotEmpty
-	private String historia;
+	private String historia;	
 	
-	
-	@ManyToMany (cascade= {
-			CascadeType.PERSIST,
-			CascadeType.MERGE
-	})
-	@JoinTable (
-			name="personaje-pelicula",
-			joinColumns= {@JoinColumn (name="personaje_id")},
-			inverseJoinColumns = {@JoinColumn (name="pelicula_id")}
-			)
-			
+	@ManyToMany(mappedBy = "personajes", cascade = CascadeType.ALL)	
 	private Set <Pelicula> peliculas = new HashSet<>();
 
 	
