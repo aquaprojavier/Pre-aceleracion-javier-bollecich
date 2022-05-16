@@ -21,30 +21,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.disney.api.entities.Personaje;
+import com.disney.api.dto.PersonajeBasicDto;
+import com.disney.api.entities.PersonajeEntity;
 import com.disney.api.service.IPersonajeService;
-
-import dto.PersonajeDto;
 
 @RestController
 @RequestMapping("/characters")
-public class PersonajeRestController {
+public class PersonajeController {
 
 	@Autowired
 	private IPersonajeService personajeService;
 	
 	@GetMapping
-	public List<PersonajeDto> index(){		
-		return personajeService.personajesDto(personajeService.findAll());
+	public ResponseEntity<List<PersonajeBasicDto>>index(){		
+		List<PersonajeBasicDto> response = personajeService.listAllBasicPersonaje();
+		return ResponseEntity.ok().body(response);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> mostrar(@PathVariable Long id) {
-		Personaje personaje = null;
+		PersonajeEntity personaje = null;
 		Map<String, Object> response = new HashMap<>();
 
 		try {
 			personaje = personajeService.findById(id);
+			
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos.");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -57,12 +58,12 @@ public class PersonajeRestController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<Personaje>(personaje, HttpStatus.OK);
+		return new ResponseEntity<PersonajeEntity>(personaje, HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<?> guardar(@Valid @RequestBody Personaje personaje, BindingResult result) {
-		Personaje personajeNuevo = null;
+	public ResponseEntity<?> guardar(@Valid @RequestBody PersonajeEntity personaje, BindingResult result) {
+		PersonajeEntity personajeNuevo = null;
 		Map<String, Object> response = new HashMap<>();
 
 		if (result.hasErrors()) {
@@ -91,11 +92,11 @@ public class PersonajeRestController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> editar(@Valid @RequestBody Personaje personaje, BindingResult result,
+	public ResponseEntity<?> editar(@Valid @RequestBody PersonajeEntity personaje, BindingResult result,
 			@PathVariable Long id) {
 
-		Personaje personajeActual = personajeService.findById(id);
-		Personaje personajeActualizado = null;
+		PersonajeEntity personajeActual = personajeService.findById(id);
+		PersonajeEntity personajeActualizado = null;
 		Map<String, Object> response = new HashMap<>();
 
 		if (result.hasErrors()) {

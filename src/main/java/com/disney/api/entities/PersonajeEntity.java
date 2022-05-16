@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,11 +20,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "personajes")
-public class Personaje implements Serializable {
+public class PersonajeEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name= "personaje_id", unique = true, nullable = false)
+	@Column(name= "personaje_id")
 	private Long personajeId;
 	
 	private String imagen;
@@ -41,8 +40,8 @@ public class Personaje implements Serializable {
 	@NotEmpty
 	private String historia;	
 	
-	@ManyToMany(mappedBy = "personajes", cascade = CascadeType.ALL)	
-	private Set <Pelicula> peliculas = new HashSet<>();
+	@ManyToMany(mappedBy = "personajes")	
+	private Set <PeliculaEntity> peliculas = new HashSet<>();
 
 	
 	private static final long serialVersionUID = 1L;

@@ -1,21 +1,18 @@
 package com.disney.api.service;
 import java.util.List;
 
-import com.disney.api.entities.Personaje;
-
-import dto.PersonajeDto;
-
-
+import com.disney.api.dto.PersonajeBasicDto;
+import com.disney.api.entities.PersonajeEntity;
 
 public interface IPersonajeService {	
 	
-	public List <Personaje> findAll();
+	public List <PersonajeEntity> findAll();
 	
-	public List <PersonajeDto> personajesDto(List <Personaje> personajes);
+	public List <PersonajeBasicDto> listAllBasicPersonaje();
 	
-	public Personaje findById(Long id);
+	public PersonajeEntity findById(Long id);
 		
-	public Personaje save (Personaje personaje);
+	public PersonajeEntity save (PersonajeEntity personaje);
 	
 	public void delete (Long id);
 }
