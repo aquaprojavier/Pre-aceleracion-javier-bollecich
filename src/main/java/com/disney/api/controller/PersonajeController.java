@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.disney.api.dto.PersonajeBasicDto;
+import com.disney.api.dto.PersonajeDto;
 import com.disney.api.entities.PersonajeEntity;
 import com.disney.api.service.IPersonajeService;
 
@@ -39,56 +40,16 @@ public class PersonajeController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> mostrar(@PathVariable Long id) {
-		PersonajeEntity personaje = null;
-		Map<String, Object> response = new HashMap<>();
-
-		try {
-			personaje = personajeService.findById(id);
-			
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar la consulta en la base de datos.");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		if (personaje == null) {
-			response.put("mensaje",
-					"El personaje con el ID ".concat(id.toString().concat(" no existe en la base de datos!.")));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity<PersonajeEntity>(personaje, HttpStatus.OK);
+	public ResponseEntity<PersonajeDto> showCharacter(@PathVariable Long id) {
+		PersonajeDto personajeDto = personajeService.showCharacter(id);
+		return ResponseEntity.ok().body(personajeDto);
 	}
 
 	@PostMapping
-	public ResponseEntity<?> guardar(@Valid @RequestBody PersonajeEntity personaje, BindingResult result) {
-		PersonajeEntity personajeNuevo = null;
-		Map<String, Object> response = new HashMap<>();
-
-		if (result.hasErrors()) {
-
-			List<String> errors = result.getFieldErrors().stream()
-					.map(err -> "El campo '" + err.getField() + "' " + err.getDefaultMessage())
-					.collect(Collectors.toList());
-			response.put("errors", errors);
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
-
-		}
-
-		try {
-			personajeNuevo = personajeService.save(personaje);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar la inserción en la base de datos.");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-		response.put("mensaje", "El personaje ha sido creado con éxito");
-		response.put("personaje", personajeNuevo);
-
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	public ResponseEntity<PersonajeDto> saveCharacter(@RequestBody PersonajeDto dto) {
+		PersonajeDto characterSaved = personajeService.save(dto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(characterSaved);
+		
 	}
 
 	@PutMapping("/{id}")

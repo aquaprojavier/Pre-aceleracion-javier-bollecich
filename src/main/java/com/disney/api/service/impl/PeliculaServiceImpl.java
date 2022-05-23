@@ -76,7 +76,6 @@ public class PeliculaServiceImpl implements IPeliculaService {
 	@Override
 	public PeliculaDto showMovie(Long id) {
 		PeliculaEntity entity = peliculaRepository.findById(id).orElse(null);
-		PeliculaDto response = peliculaMapper.peliculaEntity2Dto(entity, true);
-		return response;
+		return peliculaMapper.peliculaEntity2Dto(entity, true);
 	}
 }

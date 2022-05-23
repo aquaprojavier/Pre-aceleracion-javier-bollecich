@@ -2,6 +2,7 @@ package com.disney.api.service;
 import java.util.List;
 
 import com.disney.api.dto.PersonajeBasicDto;
+import com.disney.api.dto.PersonajeDto;
 import com.disney.api.entities.PersonajeEntity;
 
 public interface IPersonajeService {	
@@ -10,9 +11,9 @@ public interface IPersonajeService {
 	
 	public List <PersonajeBasicDto> listAllBasicPersonaje();
 	
-	public PersonajeEntity findById(Long id);
+	public PersonajeDto showCharacter(Long id);
 		
-	public PersonajeEntity save (PersonajeEntity personaje);
+	public PersonajeDto save (PersonajeDto dto);
 	
 	public void delete (Long id);
 }
