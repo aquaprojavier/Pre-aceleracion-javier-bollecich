@@ -52,7 +52,7 @@ public class PersonajeMapper {
 	}
 
 	public List<PersonajeDto> personajeEntitySet2Dto(Collection<PersonajeEntity> entities, boolean loadPeliculas) {
-		List<PersonajeDto> dtos = new ArrayList<PersonajeDto>();
+		List<PersonajeDto> dtos = new ArrayList<>();
 		for (PersonajeEntity entity : entities) {
 			dtos.add(personajeEntity2Dto(entity, loadPeliculas));
 		}
@@ -60,7 +60,7 @@ public class PersonajeMapper {
 	}
 
 	public List<PersonajeBasicDto> personajeEntitySet2BasicDto(Collection<PersonajeEntity> entities) {
-		List<PersonajeBasicDto> basicDtos = new ArrayList<PersonajeBasicDto>();
+		List<PersonajeBasicDto> basicDtos = new ArrayList<>();
 
 		for (PersonajeEntity entity : entities) {
 			PersonajeBasicDto basicDto = new PersonajeBasicDto();
@@ -72,7 +72,7 @@ public class PersonajeMapper {
 	}
 	
 	public Set<PersonajeEntity> personajeDtoList2Entity (List<PersonajeDto> dtos, boolean loadPeliculas){
-		Set<PersonajeEntity> entities = new HashSet<PersonajeEntity>();
+		Set<PersonajeEntity> entities = new HashSet<>();
 		for (PersonajeDto dto : dtos) {
 			entities.add(personajeDto2Entity(dto, loadPeliculas));
 		}
