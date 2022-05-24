@@ -7,13 +7,15 @@ import com.disney.api.entities.PersonajeEntity;
 
 public interface IPersonajeService {	
 	
-	public List <PersonajeEntity> findAll();
+	List <PersonajeEntity> findAll();
 	
-	public List <PersonajeBasicDto> listAllBasicPersonaje();
+	List <PersonajeBasicDto> listAllBasicPersonaje();
 	
-	public PersonajeDto showCharacter(Long id);
+	PersonajeDto showCharacter(Long id);
 		
-	public PersonajeDto save (PersonajeDto dto);
+	PersonajeDto save (PersonajeDto dto);
 	
-	public void delete (Long id);
+	void delete (Long id);
+	
+	PersonajeDto update(Long id, PersonajeDto dto);
 }

@@ -3,6 +3,7 @@ package com.disney.api.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -72,7 +73,7 @@ public class PeliculaEntity implements Serializable {
 	
 	public void delPersonaje (PersonajeEntity personaje) {
 		for (PersonajeEntity character : personajes){
-			if (character.getPersonajeId()== personaje.getPersonajeId()) {
+			if (Objects.equals(character.getPersonajeId(), personaje.getPersonajeId())) {
 				personajes.remove(personaje);
 			}
 		}

@@ -54,4 +54,15 @@ public class PersonajeServiceImplement implements IPersonajeService {
 	public void delete(Long id) {
 		personajeRepo.deleteById(id);
 	}
+
+	@Override
+	public PersonajeDto update(Long id, PersonajeDto dto) {
+		PersonajeEntity personaje = personajeRepo.findById(id).orElse(null);
+		personaje.setEdad(dto.getEdad());
+		personaje.setNombre(dto.getNombre());
+		personaje.setHistoria(dto.getHistoria());
+		personaje.setImagen(dto.getImagen());
+		personaje.setPeso(dto.getPeso());
+		return personajeMapper.personajeEntity2Dto(personaje, true);
+	}
 }

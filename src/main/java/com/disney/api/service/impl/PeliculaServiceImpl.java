@@ -28,8 +28,7 @@ public class PeliculaServiceImpl implements IPeliculaService {
 	public PeliculaDto save(PeliculaDto dto) {
 		PeliculaEntity entity = peliculaMapper.peliculaDto2Entity(dto, true);
 		PeliculaEntity entitySaved = peliculaRepository.save(entity);
-		PeliculaDto result = peliculaMapper.peliculaEntity2Dto(entitySaved, false);
-		return result;
+		return peliculaMapper.peliculaEntity2Dto(entitySaved, false);
 	}
 
 	public List<PeliculaDto> getAllPeliculas() {
@@ -43,7 +42,7 @@ public class PeliculaServiceImpl implements IPeliculaService {
 	}
 
 	public PeliculaDto update(Long id, PeliculaDto dto) {
-		PeliculaEntity entity = peliculaRepository.getById(id);
+		PeliculaEntity entity = peliculaRepository.findById(id).orElse(null);
 		entity.setImagen(dto.getImagen());
 		entity.setCalificacion(dto.getCalificacion());
 		entity.setFechaCreacion(dto.getFechaCreacion());
